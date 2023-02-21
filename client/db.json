@@ -1,0 +1,28 @@
+{
+  "Todo": [
+    {
+      "id": 1,
+      "content": "大掃除",
+      "typeID": 1,
+      "statusID": 1,
+      "type": "house",
+      "status": "WIP"
+    },
+    {
+      "id": 2,
+      "content": "銀行振込",
+      "typeID": 2,
+      "statusID": 2,
+      "type": "job",
+      "status": "new"
+    },
+    {
+      "id": 3,
+      "content": "buy birthday present",
+      "typeID": 3,
+      "statusID": 3,
+      "type": "hobby",
+      "status": "completed"
+    }
+  ]
+}

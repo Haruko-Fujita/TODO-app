@@ -1,0 +1,33 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Todo {
+  id       Int    @id @default(autoincrement())
+  content  String @db.VarChar(255)
+  typeID   Int
+  statusID Int
+  status   Status @relation(fields: [statusID], references: [id])
+  type     Type   @relation(fields: [typeID], references: [id])
+
+  @@index([statusID], map: "Todo_statusID_fkey")
+  @@index([typeID], map: "Todo_typeID_fkey")
+}
+
+model Type {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(20)
+  Todo Todo[]
+}
+
+model Status {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(20)
+  Todo Todo[]
+}
