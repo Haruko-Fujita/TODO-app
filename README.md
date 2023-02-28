@@ -1,4 +1,4 @@
-# カード式 TODO アプリ
+# TODO アプリ
 <!-- "hoge"が何かを簡潔に紹介する -->
 
 <!-- DEMO
@@ -9,8 +9,6 @@
 
 ## 機能
 - TODO 新規登録
-- TODO カテゴリ選択
-- TODO 変更
 - TODO 削除
   
 ## 使用技術
@@ -22,8 +20,8 @@
 - MySQL: 8.0.31
   
 ## システム構成
-![image](https://user-images.githubusercontent.com/94355319/221757777-90900dca-5d9e-4a13-8021-b0695dd4aa78.png)
-
+![image](https://user-images.githubusercontent.com/94355319/221767335-a7985a5d-da68-4a26-8be5-a1182f4c30e3.png)
+  
 <!-- Usage
 DEMO の実行方法など、"hoge"の基本的な使い方を説明する -->
   
