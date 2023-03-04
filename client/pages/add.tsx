@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from '../styles/Home.module.css';
+import styles from "../styles/Home.module.css";
 import Layout from "../components/Layout";
 
 const App = () => {
@@ -19,7 +19,7 @@ const App = () => {
   };
 
   // todoを削除する処理
-  const deleteTodo = index => {
+  const deleteTodo = (index) => {
     const newTodos = todos.filter((todo, todoIndex) => {
       return index !== todoIndex;
     });
@@ -27,40 +27,34 @@ const App = () => {
   };
 
   return (
-    <div className={styles.container}>---add.tsのreturn
-
+    <div className={styles.container}>
       <header className={styles.main}>
-        <Layout>---add.tsのLayout
+        <Layout>
           <div className={styles.grid}>
-
-    <>
-      <div className="form">
-        <input
-          type="text"
-          name="todo"
-          // formの入力値をtmpTodoで持っておく
-          onChange={e => setTmpTodo(e.target.value)}
-          value={tmpTodo}
-        />
-        <button onClick={addTodo}>Add</button>
-      </div>
-      <ul>
-        {todos.map((todo, index) => {
-          return (
-            <li key={index}>
-              {todo}
-              {/* 削除ボタンを追加 */}
-              <button onClick={() => deleteTodo(index)}>delete</button>
-            </li>
-          );
-        })}
-      </ul>
-    </>
-    
-    </div>
+            <div className="form">
+              <input
+                type="text"
+                name="todo"
+                // formの入力値をtmpTodoで持っておく
+                onChange={(e) => setTmpTodo(e.target.value)}
+                value={tmpTodo}
+              />
+              <button onClick={addTodo}>Add</button>
+            </div>
+            <ul>
+              {todos.map((todo, index) => {
+                return (
+                  <li key={index}>
+                    {todo}
+                    {/* 削除ボタンを追加 */}
+                    <button onClick={() => deleteTodo(index)}>delete</button>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </Layout>
       </header>
-  
     </div>
   );
 };
