@@ -14,7 +14,7 @@ export default function Home() {
       </Head>
 
       <header className={styles.main}>
-        <Layout>---index.tsxのLayout
+        <Layout>
           <div className={styles.grid}>
 
           <Link href="/add" className={styles.card}>
