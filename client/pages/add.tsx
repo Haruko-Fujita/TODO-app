@@ -19,7 +19,7 @@ const App = () => {
   };
 
   // todoを削除する処理
-  const deleteTodo = (index) => {
+  const deleteTodo = (index: number) => {
     const newTodos = todos.filter((todo, todoIndex) => {
       return index !== todoIndex;
     });

@@ -26,7 +26,7 @@ export default function Home() {
             <Link href="/ssr" className={styles.card}>
               <h3>ok_SSR</h3>
               <p>pages/ssr</p>
-              <p>todo一覧をAPIからgetServersidePropsで表示</p>
+              <p>todo一覧をAPIからgetServerSidePropsで表示</p>
             </Link>
 
             <Link href="/contents" className={styles.card}>
