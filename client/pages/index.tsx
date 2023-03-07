@@ -30,13 +30,13 @@ export default function Home() {
             </Link>
 
             <Link href="/contents" className={styles.card}>
-              <h3>ok_SSG</h3>
+              <h3>SSG</h3>
               <p>pages/contents</p>
               <p>client/db.jsonからgetStaticPropsで表示</p>
             </Link>
 
             <Link href="http://localhost:5000/todo" className={styles.card}>
-              <h3>ok_JSON</h3>
+              <h3>JSON</h3>
               <p>localhost:5000/todoの表示</p>
             </Link>
 

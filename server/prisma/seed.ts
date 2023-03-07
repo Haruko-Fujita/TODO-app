@@ -3,9 +3,9 @@ const prisma = new PrismaClient()
 
 // モデル投入用のデータ定義
 const typeData = [
-  {name: "job"},
-  {name: "hobby"},
-  {name: "health"}
+  {name: "Work"},
+  {name: "Community"},
+  {name: "Life"}
 ]
 
 const transferTypes = async () => {
@@ -38,17 +38,17 @@ const transferStatuses = async () => {
 
 const todoData = [
   {
-    content: '銀行振込',
+    content: 'bank transfer',
     typeID: 1,
     statusID: 1
   },
   {
-    content: 'Buy Christmas gifts',
+    content: 'booking an event room',
     typeID: 2,
     statusID: 2
   },
   {
-    content: 'muscle training',
+    content: 'seasonal change of clothing',
     typeID: 3,
     statusID: 3
   }
