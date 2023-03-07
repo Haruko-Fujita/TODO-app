@@ -1,4 +1,3 @@
-// import Head from 'next/head'
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
 
@@ -13,12 +12,9 @@ export default function Layout({ children }) {
       <main className={styles.main}>{children}</main>
 
       <footer className={styles.footer}>
-        <div>BootCamp#1 by Ms.Engineer</div>
-        <div>
-          <Link href="/" className={styles.code}>
-            Back to Home
-          </Link>
-        </div>
+        <Link href="/" className={styles.code}>
+          Back to Home
+        </Link>
       </footer>
     </div>
   );
