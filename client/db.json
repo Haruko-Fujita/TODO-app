@@ -4,24 +4,24 @@
       "id": 1,
       "content": "大掃除",
       "typeID": 1,
-      "statusID": 1,
       "type": "house",
+      "statusID": 1,
       "status": "WIP"
     },
     {
       "id": 2,
       "content": "銀行振込",
       "typeID": 2,
-      "statusID": 2,
       "type": "job",
+      "statusID": 2,
       "status": "new"
     },
     {
       "id": 3,
-      "content": "buy birthday present",
+      "content": "誕生日プレゼントを買う",
       "typeID": 3,
-      "statusID": 3,
       "type": "hobby",
+      "statusID": 3,
       "status": "completed"
     }
   ]

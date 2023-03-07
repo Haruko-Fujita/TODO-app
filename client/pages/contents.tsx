@@ -3,7 +3,19 @@ import Layout from "../components/Layout";
 import fsPromises from "fs/promises";
 import path from "path";
 
-export default function Contents(props) {
+interface Todo {
+  content: string;
+  typeID: number;
+  type: string;
+  statusID: number;
+  status: string;
+}
+
+interface Props {
+  Todo: Todo[]
+}
+
+export default function Contents(props: Props) {
   const todoList = props.Todo;
   // [{name: , contents: }, {}, ...]
 
@@ -12,7 +24,7 @@ export default function Contents(props) {
       <header className={styles.main}>
         <Layout>
           <div className={styles.grid}>
-            {todoList.map((todo, index: number) => (
+            {todoList.map((todo: Todo, index: number) => (
               <div key={index} className={styles.card}>
                 <h3>{todo.content}</h3>
                 <p>
