@@ -17,50 +17,42 @@ const qs = require("qs");
 const ENDPOINT = "http://localhost:5000/todo/";
 
 // 全todo取得API呼び出し
-const getTodo = async () => {
+const getAllTodo = async () => {
   return await axios.get(ENDPOINT).then((res) => res.data);
 };
 
-// todo追加API呼び出し
-const postTodo = async (content, typeID, statusID) => {
-  const postParam = qs.stringify({
-    content: content,
-    typeID: typeID,
-    statusID: statusID,
-  });
-
-  axios
-    .post(ENDPOINT, postParam)
-    .then((res) => console.log(JSON.stringify(res.data)))
-    .catch((error) => console.log(error));
+// 指定todo取得API呼び出し
+const getTodo = async (id) => {
+  return await axios.get(ENDPOINT + id).then((res) => res.data);
 };
 
-// todo更新API呼び出し　パラメータを変数にしたい
+// todo更新API呼び出し
+// task=パラメータを変数にしたい
 const putTodo = async (id, content, typeID, statusID) => {
   const putParam = qs.stringify({
     content: content,
     typeID: typeID,
     statusID: statusID,
   });
-
   axios
     .put(ENDPOINT + id, putParam)
     .then((res) => console.log(JSON.stringify(res.data)))
     .catch((error) => console.log(error));
 };
 
-// todo削除API呼び出し　削除するとindexとidがずれるのをどうするか？
+// todo削除API呼び出し
+// task=削除するとindexとidがずれるのをどうするか？
 const delateTodo = async (id) => {
   axios
     .delete(ENDPOINT + id)
-    .then(getTodo())
+    .then(getAllTodo())
     .then((res) => console.log(JSON.stringify(res.data)))
     .catch((error) => console.log(error));
 };
 
 // 読み込み時にAPIからtodoデータを取得
 export async function getServerSideProps() {
-  const allTodo = await getTodo();
+  const allTodo = await getAllTodo();
   return {
     props: { allTodo },
   };
@@ -72,22 +64,6 @@ export default function API({ allTodo }) {
   const [tmpTodo, setTmpTodo] = useState("");
   const [tmpType, setTmpType] = useState(0);
   const [tmpStatus, setTmpStatus] = useState(0);
-
-  // 追加ボタンをクリックで、API呼び出し関数に値を渡す
-  const clickPost = () => {
-    if (tmpTodo === "") {
-      alert("todoを入力してください");
-      return;
-    } else if (Number.isNaN(tmpType)) {
-      alert("typeを選択してください");
-      return;
-    } else if (Number.isNaN(tmpStatus)) {
-      alert("statusを選択してください");
-      return;
-    }
-    postTodo(tmpTodo, tmpType, tmpStatus);
-    // post後に全todoをgetしたい...
-  };
 
   // 更新ボタンをクリックで、API呼び出し関数に値を渡す
   const clickPut = (id) => {
@@ -103,9 +79,8 @@ export default function API({ allTodo }) {
       alert("statusを選択してください");
       return;
     }
-    putTodo(27, tmpTodo, tmpType, tmpStatus);
-    // id=27を変数にしたい...
-    // post後に全todoをgetしたい...
+    putTodo(id, tmpTodo, tmpType, tmpStatus);
+    // task=put後に全todoをgetしたい...
   };
 
   // 作成したtodoを保持するstate
@@ -114,83 +89,29 @@ export default function API({ allTodo }) {
   );
 
   // 削除ボタンをクリックしたら呼び出されるイベント
-  // 削除前のtodoIdArrから、deleteIndexと一致したtodoIDを残せていない
+  // task=削除前のtodoIdArrから、deleteIndexと一致したtodoIDを残せていない
   const clickDelete = (deleteIndex) => {
     const deleteTodoArr = todoIdArr.map((todoID, todoIdArrIndex) => {
       if (deleteIndex === todoIdArrIndex) {
         delateTodo(todoID);
       }
-      return deleteIndex !== todoIdArrIndex; //
+      return deleteIndex !== todoIdArrIndex;
     });
-    setTodoIdArr(deleteTodoArr); // Deleteボタン押した後に画面更新されない
+    setTodoIdArr(deleteTodoArr); // task=Deleteボタン押した後に画面更新されない
   };
 
   return (
     <div className={styles.container}>
       <header className={styles.main}>
-        <Layout>
-          <div className="form">
-            <form method="post">
-              {/* 入力値をtmpで持っておく */}
-              <input
-                type="text"
-                name="todo"
-                value={tmpTodo}
-                onChange={(elem) => setTmpTodo(elem.target.value)}
-              ></input>
-              <select
-                id="type"
-                size="1"
-                onChange={(elem) => setTmpType(elem.target.value)}
-              >
-                <option value="type">type</option>
-                <option value="1">job</option>
-                <option value="2">social</option>
-                <option value="3">private</option>
-              </select>
-              <select
-                id="status"
-                size="1"
-                onChange={(elem) => setTmpStatus(elem.target.value)}
-              >
-                <option>status</option>
-                <option value="1">new</option>
-                <option value="2">WIP</option>
-                <option value="3">completed</option>
-              </select>
-            </form>
-          </div>
 
+        <Layout>
           <>
+            <Form>TODOを入力</Form>
             <div className="flex flex-col">
               <div className="-m-1.5 overflow-x-auto">
                 <div className="p-1.5 min-w-full inline-block align-middle">
                   <div className="overflow-hidden">
                     <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                      {/* <thead>
-                        <tr>
-                          <Title></Title>
-                          <Title>
-                            <Form>TODOを入力</Form>
-                          </Title>
-                          <Title>
-                            <DropDownType>Type</DropDownType>
-                          </Title>
-                          <Title>
-                            <DropDownStatus>Status</DropDownStatus>
-                          </Title>
-                          <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
-                            <a
-                              className="text-blue-500 hover:text-blue-700"
-                              href="#"
-                            >
-                              <ButtonGreen onClick={clickPost}>
-                                追加
-                              </ButtonGreen>
-                            </a>
-                          </td>
-                        </tr>
-                      </thead> */}
                       <thead>
                         <tr>
                           <Title>ID</Title>
