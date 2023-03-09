@@ -11,7 +11,7 @@
 
 - TODO 一覧取得
 - TODO 追加
-- TODO 更新（修正中）
+- TODO 更新
 - TODO 削除
 
 ## 使用技術
