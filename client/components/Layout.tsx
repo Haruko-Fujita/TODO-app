@@ -21,8 +21,8 @@ export default function Layout({ children }) {
       <main className={styles.main}>{children}</main>
 
       <footer className={styles.footer}>
-        <Link href="/" className={styles.code}>
-          Back to Home
+        <Link href="/Todo" className={styles.code}>
+          Go Home
         </Link>
       </footer>
     </div>
