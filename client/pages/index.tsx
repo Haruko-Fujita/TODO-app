@@ -1,6 +1,7 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Layout from "../components/Layout";
+import Todo from "./Todo";
 import Link from "next/link";
 
 export default function Home() {
@@ -16,11 +17,10 @@ export default function Home() {
 
       <header className={styles.main}>
         <Layout>
-          <div className={styles.grid}>
-            <Link href="/ssr" className={styles.card}>
-              <h3>作業中_SSR</h3>
-            </Link>
-          </div>
+          <Link href="/Todo">
+            <h3>作業中_SSR</h3>
+            {/* <Todo allTodo={undefined}></Todo> */}
+          </Link>
         </Layout>
       </header>
     </div>
