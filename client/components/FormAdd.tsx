@@ -42,7 +42,7 @@ const postTodo = async (data: IFormInput) => {
     .catch((error) => console.log(error));
 };
 
-export default function Form() {
+export default function FormAdd() {
   const { register, handleSubmit } = useForm<IFormInput>();
 
   // 送信ボタンをクリックで、API呼び出し関数に値を渡す
@@ -58,6 +58,7 @@ export default function Form() {
             <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
               <thead>
                 <tr>
+                  <ListRow>追加_todo</ListRow>
                   <ListRow>
                     <form onSubmit={handleSubmit(onSubmit)}>
                       <ListRow>

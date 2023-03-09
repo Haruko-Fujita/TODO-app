@@ -140,7 +140,7 @@ export default function API({ allTodo }) {
                                   className="text-blue-500 hover:text-blue-700"
                                   href="#"
                                 >
-                                  <ButtonBlue>完了</ButtonBlue>
+                                  {/* <ButtonBlue>完了</ButtonBlue> */}
                                   <ButtonYellow onClick={clickPut}>
                                     <Link
                                       href={{
