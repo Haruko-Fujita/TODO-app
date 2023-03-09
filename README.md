@@ -1,5 +1,4 @@
 # TODO アプリ
-
 <!-- "hoge"が何かを簡潔に紹介する -->
 
 <!-- DEMO
@@ -10,7 +9,8 @@
 
 ## 機能
 
-- TODO 新規登録
+- TODO 追加
+- TODO 更新（修正中）
 - TODO 削除
 
 ## 使用技術
@@ -21,10 +21,11 @@
 - Express: 4.16.1
 - Prisma: 4.8.0
 - MySQL: 8.0.31
+- Tailwind CSS: 3.2.7
 
 ## システム構成
 
-![image](https://user-images.githubusercontent.com/94355319/221757777-90900dca-5d9e-4a13-8021-b0695dd4aa78.png)
+![image](https://user-images.githubusercontent.com/94355319/224037042-cc9fc675-a914-44ac-880b-2b5c3c4bc4a2.png)
 
 <!-- Usage
 DEMO の実行方法など、"hoge"の基本的な使い方を説明する -->
@@ -37,6 +38,7 @@ DEMO の実行方法など、"hoge"の基本的な使い方を説明する -->
 2. server 起動  
    `cd server` `npm install`  
    package.json を下記の通り修正
+
 ```
   "scripts": {
     "start:debug": "nodemon -L --inspect=0.0.0.0:9229 ./bin/www",
@@ -46,6 +48,7 @@ DEMO の実行方法など、"hoge"の基本的な使い方を説明する -->
     "build": "npm-run-all clean tsc"
   },
 ```
+
 `npm run dev`
 
 3. MySQL 起動
@@ -57,4 +60,4 @@ DEMO の実行方法など、"hoge"の基本的な使い方を説明する -->
 
 5. client 起動  
    `cd client` `npm install` `npm run dev`  
-   アプリにアクセスする `http://localhost:3000/todo`
+   `http://localhost:3000/todo` アプリにアクセスする
