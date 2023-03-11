@@ -2,7 +2,7 @@ import ReactDOM from "react-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import "tailwindcss/tailwind.css";
 import ListRow from "../components/ListRow";
-import ButtonGreen from "../components/ButtonGreen";
+import ButtonYellow from "../components/ButtonYellow";
 import axios from "axios";
 const qs = require("qs");
 
@@ -19,6 +19,7 @@ enum StatusEnum {
 }
 
 interface IFormInput {
+  id: Number;
   todo: String;
   type: TypeEnum;
   status: StatusEnum;
@@ -26,25 +27,27 @@ interface IFormInput {
 
 const ENDPOINT = "http://localhost:5000/todo/";
 
-// todo追加API呼び出し
-const postTodo = async (data: IFormInput) => {
-  const postParam = qs.stringify({
-    "content": data.todo,
-    "typeID": data.type,
-    "statusID": data.status,
+// todo更新API呼び出し
+const putTodo = async (data: IFormInput) => {
+  const putParam = qs.stringify({
+    content: data.todo,
+    typeID: data.type,
+    statusID: data.status,
   });
+  console.log(ENDPOINT + data.id, putParam);
   axios
-    .post(ENDPOINT, postParam)
+    .put(ENDPOINT + data.id, putParam)
     .then((res) => console.log(JSON.stringify(res.data)))
     .catch((error) => console.log(error));
 };
 
-export default function FormAdd() {
+export default function FormUpdate() {
   const { register, handleSubmit } = useForm<IFormInput>();
 
-  // 送信ボタンをクリックで、API呼び出し関数に値を渡す
+  // 更新ボタンをクリックで、API呼び出し関数に値を渡す
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    postTodo(data);
+    console.log();
+    putTodo(data);
   };
 
   return (
@@ -55,8 +58,15 @@ export default function FormAdd() {
             <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
               <thead>
                 <tr>
+                  <ListRow>更新id_todo</ListRow>
                   <ListRow>
                     <form onSubmit={handleSubmit(onSubmit)}>
+                      <ListRow>
+                        <input
+                          {...register("id", { required: "必須です" })}
+                          className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                        />
+                      </ListRow>
                       <ListRow>
                         <input
                           {...register("todo", { required: "必須です" })}
@@ -90,9 +100,9 @@ export default function FormAdd() {
                         </select>
                       </ListRow>
                       <ListRow>
-                        <ButtonGreen>
+                        <ButtonYellow>
                           <input type="submit" />
-                        </ButtonGreen>
+                        </ButtonYellow>
                       </ListRow>
                     </form>
                   </ListRow>
