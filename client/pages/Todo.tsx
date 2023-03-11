@@ -5,11 +5,11 @@ import Title from "../components/Title";
 import ListRow from "../components/ListRow";
 import FormAdd from "../components/FormAdd";
 import FormUpdate from "../components/FormUpdate";
-import DropDownType from "../components/DropDownType";
-import DropDownStatus from "../components/DropDownStatus";
-import ButtonGreen from "../components/ButtonGreen";
+// import DropDownType from "../components/DropDownType";
+// import DropDownStatus from "../components/DropDownStatus";
+// import ButtonGreen from "../components/ButtonGreen";
 import ButtonYellow from "../components/ButtonYellow";
-import ButtonBlue from "../components/ButtonBlue";
+// import ButtonBlue from "../components/ButtonBlue";
 import ButtonGray from "../components/ButtonGray";
 import axios from "axios";
 import Link from "next/link";
@@ -61,28 +61,28 @@ export async function getServerSideProps() {
 
 // ブラウザへ表示するhtmlを返す
 export default function API({ allTodo }) {
-  // フォーム入力値をボタン（追加/更新）クリックまでに保持するstate
-  const [tmpTodo, setTmpTodo] = useState("");
-  const [tmpType, setTmpType] = useState(0);
-  const [tmpStatus, setTmpStatus] = useState(0);
+  // // フォーム入力値をボタン（追加/更新）クリックまでに保持するstate
+  // const [tmpTodo, setTmpTodo] = useState("");
+  // const [tmpType, setTmpType] = useState(0);
+  // const [tmpStatus, setTmpStatus] = useState(0);
 
-  // 更新ボタンをクリックで、API呼び出し関数に値を渡す
-  const clickPut = (id) => {
-    if (id === "") {
-      alert("idを入力してください");
-    } else if (tmpTodo === "") {
-      alert("todoを入力してください");
-      return;
-    } else if (Number.isNaN(tmpType)) {
-      alert("typeを選択してください");
-      return;
-    } else if (Number.isNaN(tmpStatus)) {
-      alert("statusを選択してください");
-      return;
-    }
-    putTodo(id, tmpTodo, tmpType, tmpStatus);
-    // task=put後に全todoをgetしたい...
-  };
+  // // 更新ボタンをクリックで、API呼び出し関数に値を渡す
+  // const clickPut = (id) => {
+  //   if (id === "") {
+  //     alert("idを入力してください");
+  //   } else if (tmpTodo === "") {
+  //     alert("todoを入力してください");
+  //     return;
+  //   } else if (Number.isNaN(tmpType)) {
+  //     alert("typeを選択してください");
+  //     return;
+  //   } else if (Number.isNaN(tmpStatus)) {
+  //     alert("statusを選択してください");
+  //     return;
+  //   }
+  //   putTodo(id, tmpTodo, tmpType, tmpStatus);
+  //   // task=put後に全todoをgetしたい...
+  // };
 
   // 作成したtodoを保持するstate
   const [todoIdArr, setTodoIdArr] = useState(
@@ -141,7 +141,7 @@ export default function API({ allTodo }) {
                                   href="#"
                                 >
                                   {/* <ButtonBlue>完了</ButtonBlue> */}
-                                  <ButtonYellow onClick={clickPut}>
+                                  {/* <ButtonYellow onClick={clickPut}>
                                     <Link
                                       href={{
                                         pathname: "/todo/[id]",
@@ -150,7 +150,7 @@ export default function API({ allTodo }) {
                                     >
                                       編集
                                     </Link>
-                                  </ButtonYellow>
+                                  </ButtonYellow> */}
                                   <ButtonGray>
                                     <div onClick={() => clickDelete(index)}>
                                       削除
