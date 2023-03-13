@@ -8,8 +8,6 @@ import Title from "../components/Title";
 import ListRow from "../components/ListRow";
 import FormAdd from "../components/FormAdd";
 import FormUpdate from "../components/FormUpdate";
-import DropDownType from "../components/DropDownType";
-import DropDownStatus from "../components/DropDownStatus";
 import ButtonGreen from "../components/ButtonGreen";
 import ButtonYellow from "../components/ButtonYellow";
 import ButtonBlue from "../components/ButtonBlue";
@@ -18,14 +16,12 @@ import axios from "axios";
 import { useState } from "react";
 const qs = require("qs");
 
-// const ENDPOINT = "http://localhost:5000/todo/";
-
-// // 全todo取得API呼び出し
+// 全todo取得API呼び出し
 // const getAllTodo = async () => {
-//   return await axios.get(ENDPOINT).then((res) => res.data);
+//   return await axios.get(process.env.ENDPOINT).then((res) => res.data);
 // };
 
-// // 読み込み時にAPIからtodoデータを取得
+// 読み込み時にAPIからtodoデータを取得
 // export async function getServerSideProps() {
 //   const allTodo = await getAllTodo();
 //   return {
@@ -34,6 +30,21 @@ const qs = require("qs");
 // }
 
 export default function Home() {
+  // 全todo取得API呼び出し
+  const getAllTodo = async () => {
+    return await axios.get(process.env.ENDPOINT).then((res) => {
+      res.data;
+      console.log("res.data");
+      console.log(res.data);
+    });
+  };
+  getAllTodo();
+
+  // const allTodo = getAllTodo();
+  // return {
+  //   props: { allTodo },
+  // };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -51,7 +62,7 @@ export default function Home() {
           </Link>
 
           <>
-          {/* <FormUpdate>TODOを入力</FormUpdate>
+            <FormUpdate>TODOを入力</FormUpdate>
             <FormAdd>TODOを入力</FormAdd>
             <div className="flex flex-col">
               <div className="-m-1.5 overflow-x-auto">
@@ -84,7 +95,7 @@ export default function Home() {
                                   href="#"
                                 >
                                   <ButtonBlue>完了</ButtonBlue>
-                                  <ButtonYellow onClick={clickPut}>
+                                  {/* <ButtonYellow onClick={clickPut}>
                                     <Link
                                       href={{
                                         pathname: "/todo/[id]",
@@ -93,11 +104,11 @@ export default function Home() {
                                     >
                                       編集
                                     </Link>
-                                  </ButtonYellow>
+                                  </ButtonYellow> */}
                                   <ButtonGray>
-                                    <div onClick={() => clickDelete(index)}>
+                                    {/* <div onClick={() => clickDelete(index)}>
                                       削除
-                                    </div>
+                                    </div> */}
                                   </ButtonGray>
                                 </a>
                               </td>
@@ -109,7 +120,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </div> */}
+            </div>
           </>
         </Layout>
       </header>

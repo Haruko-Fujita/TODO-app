@@ -16,11 +16,9 @@ import Link from "next/link";
 import { useState } from "react";
 const qs = require("qs");
 
-const ENDPOINT = "http://localhost:5000/todo/";
-
 // 全todo取得API呼び出し
 const getAllTodo = async () => {
-  return await axios.get(ENDPOINT).then((res) => res.data);
+  return await axios.get(process.env.ENDPOINT).then((res) => res.data);
 };
 
 // todo更新API呼び出し
@@ -32,7 +30,7 @@ const putTodo = async (id, content, typeID, statusID) => {
     statusID: statusID,
   });
   axios
-    .put(ENDPOINT + id, putParam)
+    .put(process.env.ENDPOINT + id, putParam)
     .then((res) => console.log(JSON.stringify(res.data)))
     .catch((error) => console.log(error));
 };
@@ -40,12 +38,8 @@ const putTodo = async (id, content, typeID, statusID) => {
 // todo削除API呼び出し
 const delateTodo = async (id) => {
   axios
-    .delete(ENDPOINT + id)
+    .delete(process.env.ENDPOINT + id)
     .then((res) => {console.log(JSON.stringify(res.data))
-    // task=再レンダリングしたい 
-    // if (res.status === 200) {
-    // getAllTodo()
-    // } 
   })
     .then(await getAllTodo()) // task=再レンダリングされない
     .catch((error) => console.log(error));
@@ -61,28 +55,6 @@ export async function getServerSideProps() {
 
 // ブラウザへ表示するhtmlを返す
 export default function API({ allTodo }) {
-  // // フォーム入力値をボタン（追加/更新）クリックまでに保持するstate
-  // const [tmpTodo, setTmpTodo] = useState("");
-  // const [tmpType, setTmpType] = useState(0);
-  // const [tmpStatus, setTmpStatus] = useState(0);
-
-  // // 更新ボタンをクリックで、API呼び出し関数に値を渡す
-  // const clickPut = (id) => {
-  //   if (id === "") {
-  //     alert("idを入力してください");
-  //   } else if (tmpTodo === "") {
-  //     alert("todoを入力してください");
-  //     return;
-  //   } else if (Number.isNaN(tmpType)) {
-  //     alert("typeを選択してください");
-  //     return;
-  //   } else if (Number.isNaN(tmpStatus)) {
-  //     alert("statusを選択してください");
-  //     return;
-  //   }
-  //   putTodo(id, tmpTodo, tmpType, tmpStatus);
-  //   // task=put後に全todoをgetしたい...
-  // };
 
   // 作成したtodoを保持するstate
   const [todoIdArr, setTodoIdArr] = useState(
