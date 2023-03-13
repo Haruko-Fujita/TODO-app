@@ -1,8 +1,6 @@
 import { useRouter } from "next/router";
-import Layout from "../../components/Layout";
+import Layout from "@/components/Layout";
 import axios from "axios";
-
-const ENDPOINT = "http://localhost:5000/todo/";
 
 // 読み込み時にAPIからtodoデータを取得
 export async function getServerSideProps() {
@@ -19,7 +17,7 @@ export default function Id({ todo }) {
 
   // 指定todo取得API呼び出し
   const getTodo = async (id: number) => {
-    return await axios.get(ENDPOINT + id).then((res) => res.data);
+    return await axios.get(process.env.ENDPOINT + id).then((res) => res.data);
   };
 
   return (

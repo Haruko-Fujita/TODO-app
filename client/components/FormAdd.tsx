@@ -1,8 +1,8 @@
 import ReactDOM from "react-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import "tailwindcss/tailwind.css";
-import ListRow from "../components/ListRow";
-import ButtonGreen from "../components/ButtonGreen";
+import ListRow from "@/components/ListRow";
+import ButtonGreen from "@/components/ButtonGreen";
 import axios from "axios";
 const qs = require("qs");
 
@@ -24,8 +24,6 @@ interface IFormInput {
   status: StatusEnum;
 }
 
-const ENDPOINT = "http://localhost:5000/todo/";
-
 // todo追加API呼び出し
 const postTodo = async (data: IFormInput) => {
   const postParam = qs.stringify({
@@ -34,7 +32,7 @@ const postTodo = async (data: IFormInput) => {
     statusID: data.status,
   });
   axios
-    .post(ENDPOINT, postParam)
+    .post(process.env.ENDPOINT, postParam)
     .then((res) => {
       console.log(JSON.stringify(res.data));
       // task=200のとき追加したtodoをレンダリングしたい

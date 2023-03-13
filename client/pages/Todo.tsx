@@ -1,52 +1,44 @@
 import "tailwindcss/tailwind.css";
 import styles from "../styles/Home.module.css";
-import Layout from "../components/Layout";
-import Title from "../components/Title";
-import ListRow from "../components/ListRow";
-import FormAdd from "../components/FormAdd";
-import FormUpdate from "../components/FormUpdate";
-// import DropDownType from "../components/DropDownType";
-// import DropDownStatus from "../components/DropDownStatus";
-// import ButtonGreen from "../components/ButtonGreen";
-import ButtonYellow from "../components/ButtonYellow";
-// import ButtonBlue from "../components/ButtonBlue";
-import ButtonGray from "../components/ButtonGray";
+import Layout from "@/components/Layout";
+import Title from "@/components/Title";
+import ListRow from "@/components/ListRow";
+import FormAdd from "@/components/FormAdd";
+import FormUpdate from "@/components/FormUpdate";
+// import ButtonGreen from "@/components/ButtonGreen";
+import ButtonYellow from "@/components/ButtonYellow";
+// import ButtonBlue from "@/components/ButtonBlue";
+import ButtonGray from "@/components/ButtonGray";
 import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
 const qs = require("qs");
 
-const ENDPOINT = "http://localhost:5000/todo/";
-
 // 全todo取得API呼び出し
 const getAllTodo = async () => {
-  return await axios.get(ENDPOINT).then((res) => res.data);
+  return await axios.get(process.env.ENDPOINT).then((res) => res.data);
 };
 
 // todo更新API呼び出し
-// task=パラメータを変数にしたい
-const putTodo = async (id, content, typeID, statusID) => {
+const putTodo = async (id: number, content: string, typeID: number, statusID: number) => {
   const putParam = qs.stringify({
     content: content,
     typeID: typeID,
     statusID: statusID,
   });
   axios
-    .put(ENDPOINT + id, putParam)
+    .put(process.env.ENDPOINT + id, putParam)
     .then((res) => console.log(JSON.stringify(res.data)))
     .catch((error) => console.log(error));
 };
 
 // todo削除API呼び出し
-const delateTodo = async (id) => {
+const delateTodo = async (id: number) => {
   axios
-    .delete(ENDPOINT + id)
-    .then((res) => {console.log(JSON.stringify(res.data))
-    // task=再レンダリングしたい 
-    // if (res.status === 200) {
-    // getAllTodo()
-    // } 
-  })
+    .delete(process.env.ENDPOINT + id)
+    .then((res) => {
+      console.log(JSON.stringify(res.data));
+    })
     .then(await getAllTodo()) // task=再レンダリングされない
     .catch((error) => console.log(error));
 };
@@ -61,29 +53,6 @@ export async function getServerSideProps() {
 
 // ブラウザへ表示するhtmlを返す
 export default function API({ allTodo }) {
-  // // フォーム入力値をボタン（追加/更新）クリックまでに保持するstate
-  // const [tmpTodo, setTmpTodo] = useState("");
-  // const [tmpType, setTmpType] = useState(0);
-  // const [tmpStatus, setTmpStatus] = useState(0);
-
-  // // 更新ボタンをクリックで、API呼び出し関数に値を渡す
-  // const clickPut = (id) => {
-  //   if (id === "") {
-  //     alert("idを入力してください");
-  //   } else if (tmpTodo === "") {
-  //     alert("todoを入力してください");
-  //     return;
-  //   } else if (Number.isNaN(tmpType)) {
-  //     alert("typeを選択してください");
-  //     return;
-  //   } else if (Number.isNaN(tmpStatus)) {
-  //     alert("statusを選択してください");
-  //     return;
-  //   }
-  //   putTodo(id, tmpTodo, tmpType, tmpStatus);
-  //   // task=put後に全todoをgetしたい...
-  // };
-
   // 作成したtodoを保持するstate
   const [todoIdArr, setTodoIdArr] = useState(
     JSON.parse(JSON.stringify(allTodo)).map((todo) => todo.id)

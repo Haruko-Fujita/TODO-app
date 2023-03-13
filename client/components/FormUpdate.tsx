@@ -1,8 +1,8 @@
 import ReactDOM from "react-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import "tailwindcss/tailwind.css";
-import ListRow from "../components/ListRow";
-import ButtonYellow from "../components/ButtonYellow";
+import ListRow from "@/components/ListRow";
+import ButtonYellow from "@/components/ButtonYellow";
 import axios from "axios";
 const qs = require("qs");
 
@@ -25,8 +25,6 @@ interface IFormInput {
   status: StatusEnum;
 }
 
-const ENDPOINT = "http://localhost:5000/todo/";
-
 // todo更新API呼び出し
 const putTodo = async (data: IFormInput) => {
   const putParam = qs.stringify({
@@ -34,9 +32,8 @@ const putTodo = async (data: IFormInput) => {
     typeID: data.type,
     statusID: data.status,
   });
-  console.log(ENDPOINT + data.id, putParam);
   axios
-    .put(ENDPOINT + data.id, putParam)
+    .put(process.env.ENDPOINT + data.id, putParam)
     .then((res) => console.log(JSON.stringify(res.data)))
     .catch((error) => console.log(error));
 };
