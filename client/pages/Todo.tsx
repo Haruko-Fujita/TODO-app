@@ -5,8 +5,6 @@ import Title from "../components/Title";
 import ListRow from "../components/ListRow";
 import FormAdd from "../components/FormAdd";
 import FormUpdate from "../components/FormUpdate";
-// import DropDownType from "../components/DropDownType";
-// import DropDownStatus from "../components/DropDownStatus";
 // import ButtonGreen from "../components/ButtonGreen";
 import ButtonYellow from "../components/ButtonYellow";
 // import ButtonBlue from "../components/ButtonBlue";
@@ -22,8 +20,7 @@ const getAllTodo = async () => {
 };
 
 // todo更新API呼び出し
-// task=パラメータを変数にしたい
-const putTodo = async (id, content, typeID, statusID) => {
+const putTodo = async (id: number, content: string, typeID: number, statusID: number) => {
   const putParam = qs.stringify({
     content: content,
     typeID: typeID,
@@ -36,11 +33,12 @@ const putTodo = async (id, content, typeID, statusID) => {
 };
 
 // todo削除API呼び出し
-const delateTodo = async (id) => {
+const delateTodo = async (id: number) => {
   axios
     .delete(process.env.ENDPOINT + id)
-    .then((res) => {console.log(JSON.stringify(res.data))
-  })
+    .then((res) => {
+      console.log(JSON.stringify(res.data));
+    })
     .then(await getAllTodo()) // task=再レンダリングされない
     .catch((error) => console.log(error));
 };
@@ -55,7 +53,6 @@ export async function getServerSideProps() {
 
 // ブラウザへ表示するhtmlを返す
 export default function API({ allTodo }) {
-
   // 作成したtodoを保持するstate
   const [todoIdArr, setTodoIdArr] = useState(
     JSON.parse(JSON.stringify(allTodo)).map((todo) => todo.id)

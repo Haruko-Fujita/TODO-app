@@ -16,19 +16,6 @@ import axios from "axios";
 import { useState } from "react";
 const qs = require("qs");
 
-// 全todo取得API呼び出し
-// const getAllTodo = async () => {
-//   return await axios.get(process.env.ENDPOINT).then((res) => res.data);
-// };
-
-// 読み込み時にAPIからtodoデータを取得
-// export async function getServerSideProps() {
-//   const allTodo = await getAllTodo();
-//   return {
-//     props: { allTodo },
-//   };
-// }
-
 export default function Home() {
   // 全todo取得API呼び出し
   const getAllTodo = async () => {
