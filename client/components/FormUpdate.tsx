@@ -1,8 +1,8 @@
 import ReactDOM from "react-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import "tailwindcss/tailwind.css";
-import ListRow from "../components/ListRow";
-import ButtonYellow from "../components/ButtonYellow";
+import ListRow from "@/components/ListRow";
+import ButtonYellow from "@/components/ButtonYellow";
 import axios from "axios";
 const qs = require("qs");
 

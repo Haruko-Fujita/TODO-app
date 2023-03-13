@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import Layout from "../../components/Layout";
+import Layout from "@/components/Layout";
 import axios from "axios";
 
 // 読み込み時にAPIからtodoデータを取得
