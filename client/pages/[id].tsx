@@ -4,10 +4,15 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function EditTodo() {
-  const [data, setData] = useState(null);
+  const [hydrated, setHydrated] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const router = useRouter();
   const id = router.query.id;
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -22,6 +27,7 @@ export default function EditTodo() {
 
   if (isLoading) return <p>Loading...</p>;
   if (!data) return <p>No profile data</p>;
+  if (!hydrated) return null;
 
   return (
     <Layout>

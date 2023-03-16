@@ -1,8 +1,7 @@
-import { useForm, SubmitHandler } from "react-hook-form";
-import "tailwindcss/tailwind.css";
 import ListRow from "@/components/ListRow";
-import ButtonGreen from "@/components/ButtonGreen";
-import Title from "@/components/Title";
+import ButtonYellow from "@/components/ButtonYellow";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useRouter } from "next/router";
 import axios from "axios";
 const qs = require("qs");
 
@@ -24,27 +23,29 @@ interface IFormInput {
   status: StatusEnum;
 }
 
-// todo追加API呼び出し
-const postTodo = async (data: IFormInput) => {
-  const postParam = qs.stringify({
-    content: data.todo,
-    typeID: data.type,
-    statusID: data.status,
-  });
-  axios
-    .post(process.env.NEXT_PUBLIC_ENDPOINT, postParam)
-    .then((res) => {
-      console.log(JSON.stringify(res.data));
-    })
-    .catch((error) => {
-      console.log(error);
-      return;
-    });
-};
-
 export default function FormAdd() {
+  const router = useRouter();
+
   const { register, handleSubmit } = useForm<IFormInput>();
-  console.log(register, handleSubmit);
+
+  // todo追加API呼び出し
+  const postTodo = async (data: IFormInput) => {
+    const postParam = qs.stringify({
+      content: data.todo,
+      typeID: data.type,
+      statusID: data.status,
+    });
+    axios
+      .post(process.env.NEXT_PUBLIC_ENDPOINT, postParam)
+      .then((res) => {
+        router.reload();
+        console.log(JSON.stringify(res.data));
+      })
+      .catch((error) => {
+        console.log(error);
+        return;
+      });
+  };
 
   // 送信ボタンをクリックで、API呼び出し関数に値を渡す
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
@@ -57,8 +58,8 @@ export default function FormAdd() {
         <div className="p-1.5 min-w-full inline-block align-middle">
           <div className="overflow-hidden">
             <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                <tr className="hover:bg-gray-100 dark:hover:bg-gray-700">
+              <thead>
+                <tr>
                   <ListRow>
                     <form onSubmit={handleSubmit(onSubmit)}>
                       <ListRow>
@@ -98,14 +99,14 @@ export default function FormAdd() {
                         </select>
                       </ListRow>
                       <ListRow>
-                        <ButtonGreen>
+                        <ButtonYellow>
                           <input type="submit" value="追加" />
-                        </ButtonGreen>
+                        </ButtonYellow>
                       </ListRow>
                     </form>
                   </ListRow>
                 </tr>
-              </tbody>
+              </thead>
             </table>
           </div>
         </div>

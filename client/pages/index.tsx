@@ -3,12 +3,14 @@ import Title from "@/components/Title";
 import ListRow from "@/components/ListRow";
 import FormAdd from "@/components/FormAdd";
 import FormUpdate from "@/components/FormUpdate";
-import ButtonYellow from "@/components/ButtonYellow";
+import ButtonBlue from "@/components/ButtonBlue";
 import ButtonGray from "@/components/ButtonGray";
+import "tailwindcss/tailwind.css";
 import axios from "axios";
 import Head from "next/head";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 const qs = require("qs");
 
 interface Todo {
@@ -18,45 +20,11 @@ interface Todo {
   statusID: number;
 }
 
-// todo更新API呼び出し
-const putTodo = async (
-  id: number,
-  content: string,
-  typeID: number,
-  statusID: number
-) => {
-  const putParam = qs.stringify({
-    content: content,
-    typeID: typeID,
-    statusID: statusID,
-  });
-  axios
-    .put(process.env.NEXT_PUBLIC_ENDPOINT + id, putParam)
-    .then((res) => console.log(JSON.stringify(res.data)))
-    .catch((error) => {
-      console.log(error);
-      return;
-    });
-};
-
-// todo削除API呼び出し
-const delateTodo = async (id: number) => {
-  console.log(process.env.NEXT_PUBLIC_ENDPOINT);
-  axios
-    // .delete(`http://localhost:5000/todo/${id}`)
-    .delete(process.env.NEXT_PUBLIC_ENDPOINT + id)
-    .then((res) => {
-      console.log(JSON.stringify(res.data))
-    })
-    .catch((error) => {
-      console.log("error: ", error);
-      return;
-    });
-};
-
 // 全todo取得API呼び出し
 const getAllTodo = async () => {
-  return await axios.get(process.env.NEXT_PUBLIC_ENDPOINT).then((res) => res.data);
+  return await axios
+    .get(process.env.NEXT_PUBLIC_ENDPOINT)
+    .then((res) => res.data);
 };
 
 // 読み込み時にAPIからtodoデータを取得
@@ -68,15 +36,26 @@ export async function getServerSideProps() {
 }
 
 export default function Home({ allTodo }) {
+  const router = useRouter();
+
   const [hydrated, setHydrated] = useState(false);
   useEffect(() => {
     setHydrated(true);
   }, []);
   if (!hydrated) return null;
 
-  // 削除ボタンをクリックしたら呼び出されるイベント
-  const clickDelete = (id: number) => {
-    delateTodo(id);
+  // todo削除API呼び出し
+  const clickDelete = async (id: number) => {
+    axios
+      .delete(process.env.NEXT_PUBLIC_ENDPOINT + id)
+      .then((res) => {
+        router.reload();
+        console.log(JSON.stringify(res.data));
+      })
+      .catch((error) => {
+        console.log("error: ", error);
+        return;
+      });
   };
 
   return (
@@ -114,16 +93,14 @@ export default function Home({ allTodo }) {
                     <ListRow>{todo.content}</ListRow>
                     <ListRow>{todo.typeID}</ListRow>
                     <ListRow>{todo.statusID}</ListRow>
-                    {/* <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium"> */}
-                      <a className="text-blue-500 hover:text-blue-700" href="#">
-                        <ButtonYellow>
-                          <Link href={`/${todo.id}`}>編集</Link>
-                        </ButtonYellow>
-                        <ButtonGray>
-                          <div onClick={() => clickDelete(todo.id)}>削除</div>
-                        </ButtonGray>
-                      </a>
-                    {/* </td> */}
+                    <a className="text-blue-500 hover:text-blue-700" href="#">
+                      <ButtonBlue>
+                        <Link href={`/${todo.id}`}>編集</Link>
+                      </ButtonBlue>
+                      <ButtonGray>
+                        <div onClick={() => clickDelete(todo.id)}>削除</div>
+                      </ButtonGray>
+                    </a>
                   </tr>
                 </tbody>
               );

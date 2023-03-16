@@ -1,8 +1,7 @@
-import { useForm, SubmitHandler } from "react-hook-form";
-import "tailwindcss/tailwind.css";
 import ListRow from "@/components/ListRow";
-import ButtonYellow from "@/components/ButtonYellow";
-import Title from "@/components/Title";
+import ButtonBlue from "@/components/ButtonBlue";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useRouter } from "next/router";
 import axios from "axios";
 const qs = require("qs");
 
@@ -25,21 +24,29 @@ interface IFormInput {
   status: StatusEnum;
 }
 
-// todo更新API呼び出し
-const putTodo = async (data: IFormInput) => {
-  const putParam = qs.stringify({
-    content: data.todo,
-    typeID: data.type,
-    statusID: data.status,
-  });
-  axios
-    .put(process.env.NEXT_PUBLIC_ENDPOINT + data.id, putParam)
-    .then((res) => console.log(JSON.stringify(res.data)))
-    .catch((error) => console.log(error));
-};
-
 export default function FormUpdate() {
+  const router = useRouter();
+
   const { register, handleSubmit } = useForm<IFormInput>();
+
+  // todo更新API呼び出し
+  const putTodo = async (data: IFormInput) => {
+    const putParam = qs.stringify({
+      content: data.todo,
+      typeID: data.type,
+      statusID: data.status,
+    });
+    axios
+      .put(process.env.NEXT_PUBLIC_ENDPOINT + data.id, putParam)
+      .then((res) => {
+        router.reload();
+        console.log(JSON.stringify(res.data));
+      })
+      .catch((error) => {
+        console.log(error);
+        return;
+      });
+  };
 
   // 更新ボタンをクリックで、API呼び出し関数に値を渡す
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
@@ -93,7 +100,7 @@ export default function FormUpdate() {
                         </select>
                       </ListRow>
                       <ListRow>
-                      <select
+                        <select
                           id="status"
                           {...register("status", { required: true })}
                           className="block appearance-none w-full bg-white border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white"
@@ -105,9 +112,9 @@ export default function FormUpdate() {
                         </select>
                       </ListRow>
                       <ListRow>
-                        <ButtonYellow>
+                        <ButtonBlue>
                           <input type="submit" value="変更" />
-                        </ButtonYellow>
+                        </ButtonBlue>
                       </ListRow>
                     </form>
                   </ListRow>
