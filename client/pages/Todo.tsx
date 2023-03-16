@@ -1,13 +1,10 @@
-import "tailwindcss/tailwind.css";
 import styles from "../styles/Home.module.css";
 import Layout from "@/components/Layout";
 import Title from "@/components/Title";
 import ListRow from "@/components/ListRow";
 import FormAdd from "@/components/FormAdd";
 import FormUpdate from "@/components/FormUpdate";
-// import ButtonGreen from "@/components/ButtonGreen";
 import ButtonYellow from "@/components/ButtonYellow";
-// import ButtonBlue from "@/components/ButtonBlue";
 import ButtonGray from "@/components/ButtonGray";
 import axios from "axios";
 import Link from "next/link";
@@ -20,7 +17,12 @@ const getAllTodo = async () => {
 };
 
 // todo更新API呼び出し
-const putTodo = async (id: number, content: string, typeID: number, statusID: number) => {
+const putTodo = async (
+  id: number,
+  content: string,
+  typeID: number,
+  statusID: number
+) => {
   const putParam = qs.stringify({
     content: content,
     typeID: typeID,
@@ -109,17 +111,9 @@ export default function API({ allTodo }) {
                                   className="text-blue-500 hover:text-blue-700"
                                   href="#"
                                 >
-                                  {/* <ButtonBlue>完了</ButtonBlue> */}
-                                  {/* <ButtonYellow onClick={clickPut}>
-                                    <Link
-                                      href={{
-                                        pathname: "/todo/[id]",
-                                        query: { id: todo.id },
-                                      }}
-                                    >
-                                      編集
-                                    </Link>
-                                  </ButtonYellow> */}
+                                  <ButtonYellow>
+                                    <Link href={`/todo/${todo.id}`}>編集</Link>
+                                  </ButtonYellow>
                                   <ButtonGray>
                                     <div onClick={() => clickDelete(index)}>
                                       削除
