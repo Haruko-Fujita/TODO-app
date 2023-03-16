@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Layout({ children }) {
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <meta charSet="utf-8" />
         <title>Todo app</title>
@@ -14,15 +14,14 @@ export default function Layout({ children }) {
       </Head>
 
       <header>
-        <h1 className={styles.title}>Todo list</h1>
-        <p className={styles.description}></p>
+        <h1>Todo list</h1>
       </header>
 
-      <main className={styles.main}>{children}</main>
+      <main>{children}</main>
 
-      <footer className={styles.footer}>
-        <Link href="/Todo" className={styles.code}>
-          Go Home
+      <footer>
+        <Link href="/">
+          Home
         </Link>
       </footer>
     </div>
