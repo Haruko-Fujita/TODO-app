@@ -1,8 +1,8 @@
-import ReactDOM from "react-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import "tailwindcss/tailwind.css";
 import ListRow from "@/components/ListRow";
 import ButtonGreen from "@/components/ButtonGreen";
+import Title from "@/components/Title";
 import axios from "axios";
 const qs = require("qs");
 
@@ -32,16 +32,19 @@ const postTodo = async (data: IFormInput) => {
     statusID: data.status,
   });
   axios
-    .post(process.env.ENDPOINT, postParam)
+    .post(process.env.NEXT_PUBLIC_ENDPOINT, postParam)
     .then((res) => {
       console.log(JSON.stringify(res.data));
-      // task=200のとき追加したtodoをレンダリングしたい
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      console.log(error);
+      return;
+    });
 };
 
 export default function FormAdd() {
   const { register, handleSubmit } = useForm<IFormInput>();
+  console.log(register, handleSubmit);
 
   // 送信ボタンをクリックで、API呼び出し関数に値を渡す
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
@@ -54,25 +57,29 @@ export default function FormAdd() {
         <div className="p-1.5 min-w-full inline-block align-middle">
           <div className="overflow-hidden">
             <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-              <thead>
-                <tr>
-                  <ListRow>追加_todo</ListRow>
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                <tr className="hover:bg-gray-100 dark:hover:bg-gray-700">
                   <ListRow>
                     <form onSubmit={handleSubmit(onSubmit)}>
                       <ListRow>
                         <input
-                          {...register("todo", { required: "必須です" })}
-                          className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                          id="todo"
+                          {...register("todo", {
+                            required: true,
+                            maxLength: 100,
+                          })}
+                          type="text"
+                          placeholder="TODO"
+                          className="appearance-none block w-full bg-white text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                         />
                       </ListRow>
                       <ListRow>
                         <select
-                          {...register("type", {
-                            required: "選択してください",
-                          })}
-                          className="left-0 z-10 mt-2 w-56 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none block px-4 py-2 text-sm"
+                          id="type"
+                          {...register("type", { required: true })}
+                          className="block appearance-none w-full bg-white border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white"
                         >
-                          <option value="">Type</option>
+                          <option value="0">Type</option>
                           <option value="1">work</option>
                           <option value="2">community</option>
                           <option value="3">life</option>
@@ -80,12 +87,11 @@ export default function FormAdd() {
                       </ListRow>
                       <ListRow>
                         <select
-                          {...register("status", {
-                            required: "選択してください",
-                          })}
-                          className="left-0 z-10 mt-2 w-56 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none block px-4 py-2 text-sm"
+                          id="status"
+                          {...register("status", { required: true })}
+                          className="block appearance-none w-full bg-white border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white"
                         >
-                          <option value="">Status</option>
+                          <option value="0">Status</option>
                           <option value="1">new</option>
                           <option value="2">wip</option>
                           <option value="3">completed</option>
@@ -93,13 +99,13 @@ export default function FormAdd() {
                       </ListRow>
                       <ListRow>
                         <ButtonGreen>
-                          <input type="submit" />
+                          <input type="submit" value="追加" />
                         </ButtonGreen>
                       </ListRow>
                     </form>
                   </ListRow>
                 </tr>
-              </thead>
+              </tbody>
             </table>
           </div>
         </div>

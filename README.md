@@ -61,4 +61,4 @@ DEMO の実行方法など、"hoge"の基本的な使い方を説明する -->
 
 5. client 起動  
    `cd client` `npm install` `npm run dev`  
-   `http://localhost:3000/todo` アプリにアクセスする
+   `http://localhost:3000/` アプリにアクセスする
