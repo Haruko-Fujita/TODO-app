@@ -1,8 +1,8 @@
-import ReactDOM from "react-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import "tailwindcss/tailwind.css";
 import ListRow from "@/components/ListRow";
 import ButtonYellow from "@/components/ButtonYellow";
+import Title from "@/components/Title";
 import axios from "axios";
 const qs = require("qs");
 
@@ -33,7 +33,7 @@ const putTodo = async (data: IFormInput) => {
     statusID: data.status,
   });
   axios
-    .put(process.env.ENDPOINT + data.id, putParam)
+    .put(process.env.NEXT_PUBLIC_ENDPOINT + data.id, putParam)
     .then((res) => console.log(JSON.stringify(res.data)))
     .catch((error) => console.log(error));
 };
@@ -43,7 +43,6 @@ export default function FormUpdate() {
 
   // 更新ボタンをクリックで、API呼び出し関数に値を渡す
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log();
     putTodo(data);
   };
 
@@ -55,42 +54,51 @@ export default function FormUpdate() {
             <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
               <thead>
                 <tr>
-                  <ListRow>更新id_todo</ListRow>
                   <ListRow>
                     <form onSubmit={handleSubmit(onSubmit)}>
                       <ListRow>
                         <input
-                          {...register("id", { required: "必須です" })}
-                          className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                          id="id"
+                          {...register("id", {
+                            required: true,
+                            maxLength: 100,
+                          })}
+                          type="number"
+                          placeholder="ID"
+                          className="appearance-none block w-full bg-white text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                         />
                       </ListRow>
                       <ListRow>
                         <input
-                          {...register("todo", { required: "必須です" })}
-                          className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                          id="todo"
+                          {...register("todo", {
+                            required: true,
+                            maxLength: 100,
+                          })}
+                          type="text"
+                          placeholder="TODO"
+                          className="appearance-none block w-full bg-white text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                         />
                       </ListRow>
                       <ListRow>
                         <select
-                          {...register("type", {
-                            required: "選択してください",
-                          })}
-                          className="left-0 z-10 mt-2 w-56 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none block px-4 py-2 text-sm"
+                          id="type"
+                          {...register("type", { required: true })}
+                          className="block appearance-none w-full bg-white border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white"
                         >
-                          <option value="">Type</option>
+                          <option value="0">Type</option>
                           <option value="1">work</option>
                           <option value="2">community</option>
                           <option value="3">life</option>
                         </select>
                       </ListRow>
                       <ListRow>
-                        <select
-                          {...register("status", {
-                            required: "選択してください",
-                          })}
-                          className="left-0 z-10 mt-2 w-56 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none block px-4 py-2 text-sm"
+                      <select
+                          id="status"
+                          {...register("status", { required: true })}
+                          className="block appearance-none w-full bg-white border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white"
                         >
-                          <option value="">Status</option>
+                          <option value="0">Status</option>
                           <option value="1">new</option>
                           <option value="2">wip</option>
                           <option value="3">completed</option>
@@ -98,7 +106,7 @@ export default function FormUpdate() {
                       </ListRow>
                       <ListRow>
                         <ButtonYellow>
-                          <input type="submit" />
+                          <input type="submit" value="変更" />
                         </ButtonYellow>
                       </ListRow>
                     </form>

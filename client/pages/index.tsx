@@ -5,7 +5,6 @@ import FormAdd from "@/components/FormAdd";
 import FormUpdate from "@/components/FormUpdate";
 import ButtonYellow from "@/components/ButtonYellow";
 import ButtonGray from "@/components/ButtonGray";
-import Todo from "./Todo";
 import axios from "axios";
 import Head from "next/head";
 import Link from "next/link";
@@ -32,7 +31,7 @@ const putTodo = async (
     statusID: statusID,
   });
   axios
-    .put(process.env.ENDPOINT + id, putParam)
+    .put(process.env.NEXT_PUBLIC_ENDPOINT + id, putParam)
     .then((res) => console.log(JSON.stringify(res.data)))
     .catch((error) => {
       console.log(error);
@@ -42,11 +41,12 @@ const putTodo = async (
 
 // todo削除API呼び出し
 const delateTodo = async (id: number) => {
+  console.log(process.env.NEXT_PUBLIC_ENDPOINT);
   axios
-    .delete(process.env.ENDPOINT + id)
+    // .delete(`http://localhost:5000/todo/${id}`)
+    .delete(process.env.NEXT_PUBLIC_ENDPOINT + id)
     .then((res) => {
-      console.log(process.env.ENDPOINT + id);
-      console.log("res", res);
+      console.log(JSON.stringify(res.data))
     })
     .catch((error) => {
       console.log("error: ", error);
@@ -56,7 +56,7 @@ const delateTodo = async (id: number) => {
 
 // 全todo取得API呼び出し
 const getAllTodo = async () => {
-  return await axios.get(process.env.ENDPOINT).then((res) => res.data);
+  return await axios.get(process.env.NEXT_PUBLIC_ENDPOINT).then((res) => res.data);
 };
 
 // 読み込み時にAPIからtodoデータを取得
@@ -114,7 +114,7 @@ export default function Home({ allTodo }) {
                     <ListRow>{todo.content}</ListRow>
                     <ListRow>{todo.typeID}</ListRow>
                     <ListRow>{todo.statusID}</ListRow>
-                    <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
+                    {/* <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium"> */}
                       <a className="text-blue-500 hover:text-blue-700" href="#">
                         <ButtonYellow>
                           <Link href={`/${todo.id}`}>編集</Link>
@@ -123,7 +123,7 @@ export default function Home({ allTodo }) {
                           <div onClick={() => clickDelete(todo.id)}>削除</div>
                         </ButtonGray>
                       </a>
-                    </td>
+                    {/* </td> */}
                   </tr>
                 </tbody>
               );
