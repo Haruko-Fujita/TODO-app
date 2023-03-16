@@ -12,6 +12,13 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 const qs = require("qs");
 
+interface Todo {
+  id: number;
+  content: string;
+  typeID: number;
+  statusID: number;
+}
+
 // todo更新API呼び出し
 const putTodo = async (
   id: number,
@@ -27,7 +34,10 @@ const putTodo = async (
   axios
     .put(process.env.ENDPOINT + id, putParam)
     .then((res) => console.log(JSON.stringify(res.data)))
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      console.log(error);
+      return;
+    });
 };
 
 // todo削除API呼び出し
@@ -35,10 +45,13 @@ const delateTodo = async (id: number) => {
   axios
     .delete(process.env.ENDPOINT + id)
     .then((res) => {
-      console.log(JSON.stringify(res.data));
+      console.log(process.env.ENDPOINT + id);
+      console.log("res", res);
     })
-    .then(await getAllTodo()) // task=再レンダリングされない
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      console.log("error: ", error);
+      return;
+    });
 };
 
 // 全todo取得API呼び出し
@@ -61,6 +74,11 @@ export default function Home({ allTodo }) {
   }, []);
   if (!hydrated) return null;
 
+  // 削除ボタンをクリックしたら呼び出されるイベント
+  const clickDelete = (id: number) => {
+    delateTodo(id);
+  };
+
   return (
     <div>
       <Head>
@@ -75,7 +93,6 @@ export default function Home({ allTodo }) {
         <Layout>
           <FormUpdate>TODOを入力</FormUpdate>
           <FormAdd>TODOを入力</FormAdd>
-          {/* <Todo></Todo> */}
           <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
             <thead>
               <tr>
@@ -86,7 +103,7 @@ export default function Home({ allTodo }) {
                 <Title>Action</Title>
               </tr>
             </thead>
-            {allTodo.map((todo, index: number) => {
+            {allTodo.map((todo: Todo, index: number) => {
               return (
                 <tbody
                   key={index}
@@ -97,13 +114,13 @@ export default function Home({ allTodo }) {
                     <ListRow>{todo.content}</ListRow>
                     <ListRow>{todo.typeID}</ListRow>
                     <ListRow>{todo.statusID}</ListRow>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
                       <a className="text-blue-500 hover:text-blue-700" href="#">
                         <ButtonYellow>
-                          <Link href={`/todo/${todo.id}`}>編集</Link>
+                          <Link href={`/${todo.id}`}>編集</Link>
                         </ButtonYellow>
                         <ButtonGray>
-                          <div onClick={() => clickDelete(index)}>削除</div>
+                          <div onClick={() => clickDelete(todo.id)}>削除</div>
                         </ButtonGray>
                       </a>
                     </td>
