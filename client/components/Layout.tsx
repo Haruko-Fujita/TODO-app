@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Layout({ children }) {
   return (
-    <div>
+    <div className="bg-gradient-to-r from-green-200 to-blue-100 p-2">
       <Head>
         <meta charSet="utf-8" />
         <title>Todo app</title>
@@ -13,16 +13,16 @@ export default function Layout({ children }) {
         <meta name="theme-color" content="#ffffff"></meta>
       </Head>
 
-      <header>
-        <h1>Todo list</h1>
+      <header className="flex justify-between items-center mx-2">
+        <h1 className="italic mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Todo list</h1>
+        <Link href="/" className="mx-8 italic font-bold text-lg underline decoration-solid">
+          Home
+        </Link>
       </header>
 
       <main>{children}</main>
 
       <footer>
-        <Link href="/">
-          Home
-        </Link>
       </footer>
     </div>
   );
