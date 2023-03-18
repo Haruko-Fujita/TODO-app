@@ -94,9 +94,9 @@ export default function Home({ allTodo }) {
                     <ListRow>{todo.typeID}</ListRow>
                     <ListRow>{todo.statusID}</ListRow>
                     <a className="text-blue-500 hover:text-blue-700" href="#">
-                      <ButtonBlue>
-                        <Link href={`/${todo.id}`}>編集</Link>
-                      </ButtonBlue>
+                      {/* <ButtonBlue>
+                        <Link href={`/${todo.id}`}>詳細</Link>
+                      </ButtonBlue> */}
                       <ButtonGray>
                         <div onClick={() => clickDelete(todo.id)}>削除</div>
                       </ButtonGray>
