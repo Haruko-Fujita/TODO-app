@@ -7,12 +7,13 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 // // 読み込み時にAPIからtodoデータを取得
-// export async function getServerSideProps() {
-//   const todo = await getTodo();
-//   return {
-//     props: { todo },
-//   };
-// }
+export async function getServerSideProps(context) {
+  const id = context.query.id;
+  const todo = await getTodo(id);
+  return {
+    props: { todo },
+  };
+}
 
 export default function EditTodo() {
   const router = useRouter();
