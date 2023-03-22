@@ -3,6 +3,7 @@ import Layout from "@/components/Layout";
 import Title from "@/components/Title";
 import ListRow from "@/components/ListRow";
 import FormUpdate from "@/components/FormUpdate";
+import ButtonGreen from "@/components/ButtonGreen";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -26,15 +27,26 @@ export default function EditTodo({ allTodo }) {
   const router = useRouter();
   const id = router.query.id;
   const todo = allTodo.filter((elem) => elem.id === parseInt(id))[0];
-  console.log(2, "id=", id);
-  console.log(2, "allTodo=", allTodo);
-  console.log(2, "todo=", todo);
 
   const [hydrated, setHydrated] = useState(false);
   useEffect(() => {
     setHydrated(true);
   }, []);
   if (!hydrated) return null;
+
+  // todo削除API呼び出し
+  const clickDelete = async (id: number) => {
+    axios
+      .delete(process.env.NEXT_PUBLIC_ENDPOINT + id)
+      .then((res) => {
+        router.push("/");
+        console.log(JSON.stringify(res.data));
+      })
+      .catch((error) => {
+        console.log("error: ", error);
+        return;
+      });
+  };
 
   return (
     <Layout>
@@ -55,6 +67,9 @@ export default function EditTodo({ allTodo }) {
             <ListRow>{todo.content}</ListRow>
             <ListRow>{todo.typeID}</ListRow>
             <ListRow>{todo.statusID}</ListRow>
+            <ButtonGreen>
+              <div onClick={() => clickDelete(todo.id)}>完了</div>
+            </ButtonGreen>
           </tr>
         </tbody>
       </table>

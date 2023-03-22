@@ -4,7 +4,6 @@ import Title from "@/components/Title";
 import ListRow from "@/components/ListRow";
 import FormAdd from "@/components/FormAdd";
 import ButtonBlue from "@/components/ButtonBlue";
-import ButtonGray from "@/components/ButtonGray";
 import axios from "axios";
 import Head from "next/head";
 import Link from "next/link";
@@ -42,20 +41,6 @@ export default function Home({ allTodo }) {
     setHydrated(true);
   }, []);
   if (!hydrated) return null;
-
-  // todo削除API呼び出し
-  const clickDelete = async (id: number) => {
-    axios
-      .delete(process.env.NEXT_PUBLIC_ENDPOINT + id)
-      .then((res) => {
-        router.reload();
-        console.log(JSON.stringify(res.data));
-      })
-      .catch((error) => {
-        console.log("error: ", error);
-        return;
-      });
-  };
 
   return (
     <div>
@@ -95,9 +80,6 @@ export default function Home({ allTodo }) {
                       <ButtonBlue>
                         <Link href={`/${todo.id}`}>詳細</Link>
                       </ButtonBlue>
-                      <ButtonGray>
-                        <div onClick={() => clickDelete(todo.id)}>削除</div>
-                      </ButtonGray>
                     </a>
                   </tr>
                 </tbody>
