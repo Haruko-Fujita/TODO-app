@@ -3,6 +3,7 @@ import ButtonBlue from "@/components/ButtonBlue";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { stringify } from "querystring";
 const qs = require("qs");
 
 enum TypeEnum {
@@ -26,6 +27,7 @@ interface IFormInput {
 
 export default function FormUpdate() {
   const router = useRouter();
+  const id = router.query.id;
 
   const { register, handleSubmit } = useForm<IFormInput>();
 
@@ -37,7 +39,7 @@ export default function FormUpdate() {
       statusID: data.status,
     });
     axios
-      .put(process.env.NEXT_PUBLIC_ENDPOINT + data.id, putParam)
+      .put(process.env.NEXT_PUBLIC_ENDPOINT + parseInt(id), putParam)
       .then((res) => {
         router.reload();
         console.log(JSON.stringify(res.data));
@@ -63,18 +65,6 @@ export default function FormUpdate() {
                 <tr>
                   <ListRow>
                     <form onSubmit={handleSubmit(onSubmit)}>
-                      <ListRow>
-                        <input
-                          id="id"
-                          {...register("id", {
-                            required: true,
-                            maxLength: 100,
-                          })}
-                          type="number"
-                          placeholder="ID"
-                          className="appearance-none block w-full bg-white text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        />
-                      </ListRow>
                       <ListRow>
                         <input
                           id="todo"

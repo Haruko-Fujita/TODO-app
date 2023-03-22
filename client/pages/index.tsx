@@ -1,11 +1,10 @@
+import "tailwindcss/tailwind.css";
 import Layout from "@/components/Layout";
 import Title from "@/components/Title";
 import ListRow from "@/components/ListRow";
 import FormAdd from "@/components/FormAdd";
-import FormUpdate from "@/components/FormUpdate";
 import ButtonBlue from "@/components/ButtonBlue";
 import ButtonGray from "@/components/ButtonGray";
-import "tailwindcss/tailwind.css";
 import axios from "axios";
 import Head from "next/head";
 import Link from "next/link";
@@ -70,7 +69,6 @@ export default function Home({ allTodo }) {
 
       <header>
         <Layout>
-          <FormUpdate>TODOを入力</FormUpdate>
           <FormAdd>TODOを入力</FormAdd>
           <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
             <thead>
@@ -94,9 +92,9 @@ export default function Home({ allTodo }) {
                     <ListRow>{todo.typeID}</ListRow>
                     <ListRow>{todo.statusID}</ListRow>
                     <a className="text-blue-500 hover:text-blue-700" href="#">
-                      {/* <ButtonBlue>
+                      <ButtonBlue>
                         <Link href={`/${todo.id}`}>詳細</Link>
-                      </ButtonBlue> */}
+                      </ButtonBlue>
                       <ButtonGray>
                         <div onClick={() => clickDelete(todo.id)}>削除</div>
                       </ButtonGray>
