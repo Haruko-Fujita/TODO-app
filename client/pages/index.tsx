@@ -43,19 +43,19 @@ export default function Home({ allTodo }) {
   }, []);
   if (!hydrated) return null;
 
-  // todo削除API呼び出し
-  const clickDelete = async (id: number) => {
-    axios
-      .delete(process.env.NEXT_PUBLIC_ENDPOINT + id)
-      .then((res) => {
-        router.reload();
-        console.log(JSON.stringify(res.data));
-      })
-      .catch((error) => {
-        console.log("error: ", error);
-        return;
-      });
-  };
+  // // todo削除API呼び出し
+  // const clickDelete = async (id: number) => {
+  //   axios
+  //     .delete(process.env.NEXT_PUBLIC_ENDPOINT + id)
+  //     .then((res) => {
+  //       router.reload();
+  //       console.log(JSON.stringify(res.data));
+  //     })
+  //     .catch((error) => {
+  //       console.log("error: ", error);
+  //       return;
+  //     });
+  // };
 
   return (
     <div>
@@ -95,9 +95,9 @@ export default function Home({ allTodo }) {
                       <ButtonBlue>
                         <Link href={`/${todo.id}`}>詳細</Link>
                       </ButtonBlue>
-                      <ButtonGray>
+                      {/* <ButtonGray>
                         <div onClick={() => clickDelete(todo.id)}>削除</div>
-                      </ButtonGray>
+                      </ButtonGray> */}
                     </a>
                   </tr>
                 </tbody>
