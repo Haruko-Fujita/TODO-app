@@ -1,4 +1,4 @@
-export default function ButtonGreen({ children }) {
+export default function ButtonYellow({ children }) {
   return (
     <button
       type="button"

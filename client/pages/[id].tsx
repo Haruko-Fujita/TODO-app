@@ -3,7 +3,7 @@ import Layout from "@/components/Layout";
 import Title from "@/components/Title";
 import ListRow from "@/components/ListRow";
 import FormUpdate from "@/components/FormUpdate";
-import ButtonGray from "@/components/ButtonGray";
+import ButtonGreen from "@/components/ButtonGreen";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -67,9 +67,9 @@ export default function EditTodo({ allTodo }) {
             <ListRow>{todo.content}</ListRow>
             <ListRow>{todo.typeID}</ListRow>
             <ListRow>{todo.statusID}</ListRow>
-            <ButtonGray>
+            <ButtonGreen>
               <div onClick={() => clickDelete(todo.id)}>完了</div>
-            </ButtonGray>
+            </ButtonGreen>
           </tr>
         </tbody>
       </table>
