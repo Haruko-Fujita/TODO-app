@@ -8,14 +8,16 @@ import axios from "axios";
 import Head from "next/head";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-const qs = require("qs");
 
 interface Todo {
   id: number;
   content: string;
   typeID: number;
   statusID: number;
+}
+
+interface allTodo {
+  todo: Todo;
 }
 
 // 全todo取得API呼び出し
@@ -25,17 +27,29 @@ const getAllTodo = async () => {
     .then((res) => res.data);
 };
 
+// type取得API呼び出し
+const getType = async () => {
+  return await axios
+    .get(process.env.NEXT_PUBLIC_ENDPOINT)
+    .then((res) => res.data);
+};
+
+// status取得API呼び出し
+const getStatus = async () => {
+  return await axios
+    .get(process.env.NEXT_PUBLIC_ENDPOINT)
+    .then((res) => res.data);
+};
+
 // 読み込み時にAPIからtodoデータを取得
 export async function getServerSideProps() {
-  const allTodo = await getAllTodo();
+  const allTodo: allTodo = await getAllTodo();
   return {
     props: { allTodo },
   };
 }
 
 export default function Home({ allTodo }) {
-  const router = useRouter();
-
   const [hydrated, setHydrated] = useState(false);
   useEffect(() => {
     setHydrated(true);

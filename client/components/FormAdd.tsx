@@ -17,7 +17,7 @@ enum StatusEnum {
   completed = "completed",
 }
 
-interface IFormInput {
+interface FormInput {
   todo: String;
   type: TypeEnum;
   status: StatusEnum;
@@ -26,10 +26,10 @@ interface IFormInput {
 export default function FormAdd() {
   const router = useRouter();
 
-  const { register, handleSubmit } = useForm<IFormInput>();
+  const { register, handleSubmit } = useForm<FormInput>();
 
   // todo追加API呼び出し
-  const postTodo = async (data: IFormInput) => {
+  const postTodo = async (data: FormInput) => {
     const postParam = qs.stringify({
       content: data.todo,
       typeID: data.type,
@@ -48,7 +48,7 @@ export default function FormAdd() {
   };
 
   // 送信ボタンをクリックで、API呼び出し関数に値を渡す
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+  const onSubmit: SubmitHandler<FormInput> = (data) => {
     postTodo(data);
   };
 

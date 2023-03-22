@@ -50,4 +50,16 @@ router.delete("/:id", async function (req: Request, res: Response) {
   res.json(deleteTodo);
 });
 
+// Typeの取得
+router.get("/", async function (req: Request, res: Response) {
+  const getType = await prisma.type.findMany(); //array
+  res.status(200).json(getType);
+});
+
+// Statusの取得
+router.get("/", async function (req: Request, res: Response) {
+  const getStatus = await prisma.status.findMany(); //array
+  res.status(200).json(getStatus);
+});
+
 module.exports = router;
