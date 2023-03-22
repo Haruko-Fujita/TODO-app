@@ -1,34 +1,36 @@
 import "tailwindcss/tailwind.css";
 import Layout from "@/components/Layout";
+import Title from "@/components/Title";
+import ListRow from "@/components/ListRow";
+import FormUpdate from "@/components/FormUpdate";
 import axios from "axios";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-// 指定todo取得API呼び出し
-const getTodo = async (id: number) => {
-  console.log(1, "id=", id)
+// 全todo取得API呼び出し
+const getAllTodo = async () => {
   return await axios
-    .get(process.env.NEXT_PUBLIC_ENDPOINT + id)
+    .get(process.env.NEXT_PUBLIC_ENDPOINT)
     .then((res) => res.data);
 };
 
 // 読み込み時にAPIからtodoデータを取得
-export async function getServerSideProps(context) {
-  const id = context.params.id;
-  console.log(2, "id=", id)
-  const todo = await getTodo(id); //id=NaN
+export async function getServerSideProps() {
+  const allTodo = await getAllTodo();
   return {
-    props: { todo },
+    props: { allTodo },
   };
 }
 
-export default function EditTodo({ todo }) {
+export default function EditTodo({ allTodo }) {
   const router = useRouter();
   const id = router.query.id;
-  console.log("id=", id)
+  const todo = allTodo.filter((elem) => elem.id === parseInt(id))[0];
+  console.log(2, "id=", id);
+  console.log(2, "allTodo=", allTodo);
+  console.log(2, "todo=", todo);
 
   const [hydrated, setHydrated] = useState(false);
-
   useEffect(() => {
     setHydrated(true);
   }, []);
@@ -36,8 +38,26 @@ export default function EditTodo({ todo }) {
 
   return (
     <Layout>
-      <div>todo</div>
-      <div>{todo.id}</div>
+      <FormUpdate>TODOを入力</FormUpdate>
+      <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead>
+          <tr>
+            <Title>ID</Title>
+            <Title>TODO</Title>
+            <Title>Type</Title>
+            <Title>Status</Title>
+            <Title>Action</Title>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+          <tr className="hover:bg-gray-100 dark:hover:bg-gray-700">
+            <ListRow>{todo.id}</ListRow>
+            <ListRow>{todo.content}</ListRow>
+            <ListRow>{todo.typeID}</ListRow>
+            <ListRow>{todo.statusID}</ListRow>
+          </tr>
+        </tbody>
+      </table>
     </Layout>
   );
 }
